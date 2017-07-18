@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+	<body>
+		
+	<div id="content" style="width: 300px;height:500px;border:1px solid;">
+		
+	</div>	
+	
+	<input id="usercontent">
+	<button onclick="send()">发送</button>
+	<script>
+		function send()
+		{
+			var fd=new FormData();
+			fd.append("usercontent",usercontent.value);
+			var ajax=new XMLHttpRequest();
+			ajax.open("POST","client.php",true);
+			ajax.send(fd);
+			
+			ajax.onreadystatechange=function(){
+				if(ajax.readyState==4 && ajax.status==200)
+				{
+					usercontent.innerHTML=ajax.responseText();
+				}
+			}	
+		}
+		
+		
+		
+	</script>
+		
+	</body>
+</html>

@@ -1,0 +1,21 @@
+<div class="swiper-container" style="height: 200px;">
+  <div class="swiper-wrapper">
+   
+	{foreach $carouselList as $item} 
+		<div class="swiper-slide">
+			<img src='{$item.image}' style="width: 100%;height: 100%">
+		</div>  
+	{/foreach}
+	
+  </div>
+   <div class="swiper-pagination"></div>
+</div>
+<script> 
+var mySwiper = new Swiper('.swiper-container', {
+		autoplay: 5000,//可选选项，自动滑动
+		pagination: '.swiper-pagination',
+        paginationClickable: true,
+        autoplayDisableOnInteraction : false,
+        loop:true
+})
+</script>
