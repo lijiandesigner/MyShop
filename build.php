@@ -13,12 +13,12 @@ return [
     // 生成应用公共文件
     '__file__' => ['common.php', 'config.php', 'database.php'],
 
-      // Admin 模块
+    // Admin 模块
     'admin'     => [
         '__file__'   => ['common.php'],
         '__dir__'    => ['behavior', 'controller', 'model', 'view','lang'],
         'controller' => ['Index'],
-        'model'      => ['Test'],
+        'model'      => ['spec','goods','goodsCategory','goodsAttribute','goodsType','brand'],
         'view'       => ['index/index'],
     ],
     // 其他更多的模块定义
