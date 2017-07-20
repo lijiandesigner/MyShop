@@ -6,7 +6,6 @@ class Index extends Controller{
 
 	public function index()
 	{
-
 		//查询轮播
 		$carouselList=db('carousel')->where('dis',1)->select();
 		$this->assign('carouselList',$carouselList);
@@ -18,8 +17,9 @@ class Index extends Controller{
 		//查询新品
 		$newGoods=db('goods')->where('is_new',1)->where('is_on_sale',1)->select();
 		$this->assign('newGoods',$newGoods);
-
+		
 		return $this->fetch();
+
 	}
 
 

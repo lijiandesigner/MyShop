@@ -13,12 +13,12 @@ return [
     // 生成应用公共文件
     '__file__' => ['common.php', 'config.php', 'database.php'],
 
-    // 定义demo模块的自动生成 （按照实际定义的文件名生成）
-    'demo'     => [
+      // Admin 模块
+    'admin'     => [
         '__file__'   => ['common.php'],
-        '__dir__'    => ['behavior', 'controller', 'model', 'view'],
-        'controller' => ['Index', 'Test', 'UserType'],
-        'model'      => ['User', 'UserType'],
+        '__dir__'    => ['behavior', 'controller', 'model', 'view','lang'],
+        'controller' => ['Index'],
+        'model'      => ['Test'],
         'view'       => ['index/index'],
     ],
     // 其他更多的模块定义
