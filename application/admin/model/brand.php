@@ -3,7 +3,7 @@ namespace app\admin\model;
 
 use think\Model;
 
-class brand extends Model
+class Brand extends Model
 {
 
 }

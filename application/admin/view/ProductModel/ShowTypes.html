@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+	<a href="{:url('AddType')}">添加分类</a>
+	<br>
+	<!--分类列表-->
+	<ul>
+		{volist name='types' id='item'}
+			<li>{$item.name}</li>		
+		{/volist}
+	</ul>
+	{$types->render()}
+</body>
+</html>

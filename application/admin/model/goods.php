@@ -3,7 +3,7 @@ namespace app\admin\model;
 
 use think\Model;
 
-class goods extends Model
+class Goods extends Model
 {
 
 }
