@@ -54,6 +54,9 @@ class ProductModel extends controller
 		$type->image=$req->param('image');
 		$type->is_show=$req->param('is_show');
 		$type->goods_order=$req->param('goods_order');
+		if ($type->parent_id==$type->id) {//当前选中的上级分类为自己时
+			return json(['message'=>'上级分类不可以是自己','status'=>0]);
+		}
 		$result;
 		if($type->save()){//操作成功时
 			$result=['message'=>'ok','status'=>1];
