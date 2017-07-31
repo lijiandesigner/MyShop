@@ -46,17 +46,32 @@ class ProductModel extends controller
 	}
 	//添加或修改分类
 	public function addType(Request $req){
-		$type=new GoodsCategory;
-		$req->param('typeid')&&$type=GoodsCategory::get($req->param('typeid'));	
+		$file=$req->file('image');
+		$dir=ROOT_PATH.'public'.DS.'upload'.DS.'category';
+		if (!file_exists($dir)) {
+			mkdir($dir);
+		}
+		
+		
+		$type=new GoodsCategory();
+		if($req->param('typeid')){//确认为修改
+			$type=GoodsCategory::get($req->param('typeid'));	
+			if ($type->parent_id==$type->id){//修改时当前选中的上级分类为自己时
+			return json(['message'=>'上级分类不可以是自己','status'=>0]);
+			}
+		}
+		//如果图片上传不为空
+		if ($file) {
+			//上传到服务器指定目录 并且使用uniqid规则
+			$info=$file->rule('uniqid')->move($dir);
+			$type->image=DS.'upload'.DS.'category'.DS.$info->getFilename();//获取生成的文件名
+		}
+		
 		$type->name=$req->param('name');
 		$type->parent_id=$req->param('parent_id_1');
 		$req->param('parent_id_2')&&$type->parent_id=$req->param('parent_id_2');
-		$type->image=$req->param('image');
 		$type->is_show=$req->param('is_show');
-		$type->goods_order=$req->param('goods_order');
-		if ($type->parent_id==$type->id) {//当前选中的上级分类为自己时
-			return json(['message'=>'上级分类不可以是自己','status'=>0]);
-		}
+		$type->goods_order=$req->param('goods_order');	
 		$result;
 		if($type->save()){//操作成功时
 			$result=['message'=>'ok','status'=>1];

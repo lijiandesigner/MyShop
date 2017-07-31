@@ -8,11 +8,15 @@
 		$(function(){
 			//提交表单
 			$('#sub').bind('click',function(){
-					var type=$('#typeInfo').serialize();//序列化表单
+					var type=new FormData($('#typeInfo')[0]);
 					$.ajax({
 						url:'{:url("addType")}',
 						data:type,
-						type:'post'
+						type:'POST',
+						async:false,
+						cache:false,
+						contentType:false,
+						processData:false
 					}).done(function(data){
 						alert(data.message);
 					});
@@ -48,7 +52,7 @@
 	</script>
 </head>
 <body>
-	<form method="post" id='typeInfo' enctype="">
+	<form method="post" name='typeInfo' id='typeInfo' enctype="multipart/form-data">
 		<ul>
 			<li><input type="hidden" name='typeid' value='{$typeinfo->id}'></li>
 			<li><span>分类名称:</span><div><input type="text" value='{$typeinfo->name}' name='name'></div> </li>
@@ -69,12 +73,15 @@
 					{/volist}
 			</select>
 			</div></li>
-			<li><span>分类图片:</span><div><input type="file" value='{$typeinfo->image}' name='image'></div></li>
+			<li><span>分类图片:</span><div>
+			<img src="__PUBLIC__{$typeinfo->image}" width=100 height=100 alt="">
+			<input type="file" name='image'></div></li>
 			<li><span>排序:</span><div><input type="text" value="{$typeinfo->goods_order}" name='goods_order'></div></li>
 			<li><span>是否显示:</span><div><input type="radio" name='is_show' {if condition='$typeinfo->is_show eq 1'} checked="checked" {/if} value='1' >显示
 			<input type="radio" name='is_show' {if condition='$typeinfo->is_show eq 0'} checked="checked"  {/if} value='0'>不显示
 			</div></li>
 			<li><span></span><div><input type="button" id='sub' value="确定"></div></li>
+			
 
 		</ul>
 	</form>
