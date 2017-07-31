@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>模型操作</title>
+	<script src="__PUBLIC__/static/jquery-3.2.1.js"></script>
+	<script type='text/javascript'>
+		$(function(){
+			$('#sub').bind('click',function(event){
+				var model=$('#modelInfo').serialize();
+				$.ajax({
+					url:'{:url("goodsModelManage")}',
+					data:model,
+					type:'POST'
+				}).done(function(data){
+					alert(data.message);
+				});
+			});
+		});
+	</script>
+</head>
+<body>
+<form id='modelInfo' action='' method='POST' name='modelInfo'>
+	<div><input type="text" name='name' value='{$modelInfo.name}'></div>
+	<div><input type="button" id='sub' value='提交'></div>
+	<div><input type="hidden" value='{$modelInfo.id}' name='modelId'></div>
+</form>
+</body>
+</html>

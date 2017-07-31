@@ -18,7 +18,9 @@
 						contentType:false,
 						processData:false
 					}).done(function(data){
-						alert(data.message);
+						alert(data);
+					}).fail(function(){
+						alert('失败');
 					});
 			})
 			//父菜单级联

@@ -5,6 +5,7 @@ use app\admin\model\GoodsCategory;
 use think\Request;
 use think\Db;
 use app\admin\logic\GoodLogic;
+use app\admin\model\GoodsModel;
 /*
 产品模型 控制器
 分类 规格 属性 相关操作
@@ -85,4 +86,31 @@ class ProductModel extends controller
 		$typesChild=Db::name('GoodsCategory')->where('parent_id','=',$typeid)->field('id,name')->select();
 		return json_encode($typesChild);
 	}
+	//显示所有模型
+	public function showModels(){
+		$pageResult=GoodsModel::getAllPages();
+		//$pageResult=[['id'=>'1','name'=>'mo1'],['id'=>2,'name'=>'mo2']];
+		$this->assign('goodsmodels',$pageResult);
+		return $this->fetch();
+	}
+	//操作商品模型
+	public function goodsModelManage($mId=null){
+		if (request()->isGet()) {//首次请求页面
+			$modelInfo=GoodsModel::get(1);
+			//:new GoodsModel(['id'=>0,'name'=>'']);
+			$this->assign('modelInfo',$modelInfo);
+			return $this->fetch();
+		}else if(request()->isPost()){//修改或添加商品模型 (使用POST异步提交)
+			$resultArray=['message'=>'ok','status'=>1];
+			$GoodsModel=new GoodsModel();
+			$GoodsModel->name=input('name');
+			
+			if(!$GoodsModel->save()){
+				$resultArray=['message'=>'no','status'=>0];
+			}
+			return json($resultArray);
+		}
+		
+	}
+
 }
