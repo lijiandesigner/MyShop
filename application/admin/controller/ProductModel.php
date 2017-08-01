@@ -21,7 +21,7 @@ class ProductModel extends controller
 	
 	public function typeManage($typeid=null){
 		//默认添加操作
-		$type=new GoodsCategory(['id'=>null,'name'=>'','parent_id'=>'0','image'=>'a.jpg','goods_order'=>'50','is_show'=>'0']);//is_show为0显示勾选 为1不显示
+		$type=new GoodsCategory(['id'=>null,'name'=>'','parent_id'=>'0','image'=>'a.jpg','goods_order'=>'50','is_show'=>'0']);//is_show为1显示勾选 为0不显示
 		//typeid有值时 为修改操作
 		$secTypes=[];//当前选择菜单为三级菜单时 存储二级菜单项
 		$typeLevels=['first'=>0,'second'=>0];
@@ -89,22 +89,20 @@ class ProductModel extends controller
 	//显示所有模型
 	public function showModels(){
 		$pageResult=GoodsModel::getAllPages();
-		//$pageResult=[['id'=>'1','name'=>'mo1'],['id'=>2,'name'=>'mo2']];
 		$this->assign('goodsmodels',$pageResult);
 		return $this->fetch();
 	}
 	//操作商品模型
-	public function goodsModelManage($mId=null){
+	public function goodsModelManage($mId=0){
 		if (request()->isGet()) {//首次请求页面
-			$modelInfo=GoodsModel::get(1);
-			//:new GoodsModel(['id'=>0,'name'=>'']);
+			$modelInfo=GoodsModel::get($mId);
 			$this->assign('modelInfo',$modelInfo);
 			return $this->fetch();
 		}else if(request()->isPost()){//修改或添加商品模型 (使用POST异步提交)
 			$resultArray=['message'=>'ok','status'=>1];
-			$GoodsModel=new GoodsModel();
+			//$mId为0时 添加 非0时 修改
+			$GoodsModel=!$mId?new GoodsModel():GoodsModel::get($mId);
 			$GoodsModel->name=input('name');
-			
 			if(!$GoodsModel->save()){
 				$resultArray=['message'=>'no','status'=>0];
 			}
@@ -112,5 +110,12 @@ class ProductModel extends controller
 		}
 		
 	}
-
+	//删除商品模型
+	public function goodsModelDel($mId=0){
+		$model=GoodsModel::get($mId);
+		if($model&&$model->delete()){
+			return json(['message'=>'ok','status'=>1]);
+		}
+		return json(['message'=>'对象不存在','status'=>0]);
+	}
 }

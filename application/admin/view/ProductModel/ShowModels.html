@@ -3,11 +3,26 @@
 <head>
 	<meta charset="UTF-8">
 	<title>模型展示</title>
+	<script src="__PUBLIC__/static/jquery-3.2.1.js"></script>
+	<script type='text/javascript'>
+	$(function(){
+		$('.delModel').bind('click',function(event){
+			var mId=this.id;
+			$.ajax({
+				url:"{:url('goodsModelDel')}",
+				data:{'mId':mId},
+				type:'POST'
+			}).done(function(data){
+				alert(data.message);
+			})
+		});
+	});
+	</script>
 </head>
 <body>
 	<ul>
 	{volist id='item' name='goodsmodels'}
-		<li>{$item.name} <a href="\modelsManage\modelId\{$item.id}">修改</a><a href="\dropModels\typeid\{$item.id}">删除</a></li>
+		<li>{$item.name} <a href="{:url('goodsModelManage',['mId'=>$item.id])}">修改</a><a href="#" class='delModel' id='{$item.id}'>删除</a></li>
 	{/volist}
 	{$goodsmodels->render()}
 	</ul>
