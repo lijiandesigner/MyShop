@@ -152,5 +152,19 @@ class ProductModel extends controller
 		}
 
 	}
+	//删除属性
+	public function delGoodsAttr($attrId=0){
+		$goodsAttr=GoodsAttr::get($attrId);
+		if($goodsAttr){
+			if($goodsAttr->delete()){
+				return json(['message'=>'ok','status'=>1]);
+			}else{
+				return json(['message'=>'bu ok','status'=>0]);
+			}
+		}else{
+			return json(['message'=>'属性不存在','status'=>0]);
+		}
+	}
+
 
 }
