@@ -6,6 +6,7 @@ use think\Request;
 use think\Db;
 use app\admin\logic\GoodLogic;
 use app\admin\model\GoodsModel;
+use app\admin\model\GoodsAttr;
 /*
 产品模型 控制器
 分类 规格 属性 相关操作
@@ -118,4 +119,38 @@ class ProductModel extends controller
 		}
 		return json(['message'=>'对象不存在','status'=>0]);
 	}
+	//显示所有商品属性信息
+	public function ShowGoodsAttr(){
+		$pageResult=GoodsAttr::getAllPages();
+		$this->assign('pageResult',$pageResult);
+		return $this->fetch('ProductModel/ShowGoodsAttr');
+	}
+	//操作商品属性（添加修改）
+	public function goodsAttrManage($attrId=0){
+		$modelList=GoodsModel::all();//获取所有模型 显示到下拉列表中
+		$this->assign('attrId',$attrId);//将attrId注册到模版 修改时提供依据
+		$this->assign('modelList',$modelList);//模型数据注册到模版中
+		if(request()->isGet()){
+			//如果是修改 就将需要修改的变量注册到模版
+			$attrId&&$this->assign('attrInfo',GoodsAttr::get($attrId));
+			return $this->fetch('ProductModel/GoodsAttrManage');
+		}else if(request()->isAjax()){
+			//$attrId=0为添加 不为0时为修改
+			$modelAttr=new GoodsAttr;//添加时新建空白对象
+			$attrId=input('post.attrId');//接收回传的attrId
+			if($attrId){//修改时 根据attrId查询对象
+				$modelAttr=GoodsAttr::get($attrId);	
+			}
+			$modelAttr->allowField(true)->data(input('post.'));//获取提交的数据填充到已创建的对象中
+			if($modelAttr->save()){
+				return json(['message'=>'ok','status'=>1]);
+			}else{
+				return json(['message'=>'bu ok','status'=>0]);
+			}
+
+
+		}
+
+	}
+
 }

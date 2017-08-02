@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<script src="__PUBLIC__/static/jquery-3.2.1.js"></script>
+	<script type='text/javascript'>
+		$(function(){
+			$('#sub').bind('click',function(event){
+				var attrInfo=$('#attrInfo').serialize();
+				$.ajax({
+					url:'goodsAttrManage',
+					data:attrInfo,
+					type:'POST'
+				}).done(function(data){
+					alert(data.message);
+				});
+			});
+		});
+	</script>
+</head>
+<body>
+	<form action="" method="post" name='attrInfo' id='attrInfo'>
+		<dl>
+			<dt>名称</dt>
+			<dd><input type="text" name='attr_name'
+			{present name='attrInfo'}
+			value='{$attrInfo.attr_name}'
+			{/present}
+			></dd>
+			<dt>所属商品模型</dt>
+			<dd><select name="type_id" id="">
+				<option value="0">请选择</option>
+				{volist id='model' name='modelList'}
+					<option value="{$model.id}"
+					{present name='attrInfo'}
+					{if condition='$attrInfo.goodsModel.id eq $model.id'}
+					selected='selected'
+					{/if}
+					{/present}
+					>{$model.name}</option>
+				{/volist}
+			</select></dd>
+			<dt>属性值的录入方式</dt>
+			<dd>
+			<input type="radio" value='0' name="input_type" checked='checked'>手工录入
+			<input type="radio" value='1' name="input_type"
+			{present name='attrInfo'}
+			{if condition='$attrInfo.input_type eq 1'}checked='checked'{/if}
+			{/present}
+			>从下面列表中选择(一行代表一个可选值)
+			<input type="radio" value='2' name="input_type"
+			{present name='attrInfo'}
+			{if condition='$attrInfo.input_type eq 2'}checked='checked'{/if}
+			{/present}
+			>多行文本框
+			</dd>
+			<dt>可选值列表</dt>
+			<dd><textarea name="input_value" id="" cols="30" rows="10">
+			{present name='attrInfo'}
+			{$attrInfo.input_value}
+			{/present}
+			</textarea></dd>
+			<dt><input type="hidden" value='{$attrId}' name='attrId'></dt>
+			<dd><input type="button" value='提交' id='sub'></dd>
+		</dl>
+	</form>
+</body>
+</html>

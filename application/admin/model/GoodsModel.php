@@ -10,4 +10,8 @@ class GoodsModel extends Model
 		$result=GoodsModel::order('id desc')->paginate(5);
 		return $result;
 	}
+	//一对多关联 主键位置设置 获取当前主键的商品模型所对应的属性列表
+	public function goodsAttr(){
+		return $this->hasMany('GoodsAttr');
+	}
 }

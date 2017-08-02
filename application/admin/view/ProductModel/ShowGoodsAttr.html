@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+	<ul>
+	{volist id='item' name='pageResult'}
+		<li>
+		{$item.id}-----{$item.attr_name}------{$item.goodsModel.name}
+		<a href="{:url('goodsAttrManage',['attrId'=>$item.id])}">修改</a>
+		<a href="{:url('delGoodsAttr',['attrId'=>$item.id])}">删除</a>
+		</li>
+	{/volist}
+	</ul>
+	{$pageResult->render()}
+</body>
+</html>
