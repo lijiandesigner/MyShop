@@ -54,8 +54,6 @@ class ProductModel extends controller
 		if (!file_exists($dir)) {
 			mkdir($dir);
 		}
-		
-		
 		$type=new GoodsCategory();
 		if($req->param('typeid')){//确认为修改
 			$type=GoodsCategory::get($req->param('typeid'));	
@@ -197,15 +195,17 @@ class ProductModel extends controller
 			}
 
 			try{
+				$specInfo->startTrans();
 				$specInfo->allowField(true)->data(input('post.'))->save();
 				//新增获取刚添加的规格的id 修改获取需要修改的规格id
 				$specId=$specId?$specId:$specInfo->getLastInsID();
-				
 				$specInfo->afterSave($specId);
 				//保存规格项 end
 				//操作成功时
+				$specInfo->commit();
 				return json(['message'=>'ok','status'=>1]);
 			}catch(\Exception $e){
+				$specInfo->rollback();
 				return json(['message'=>$e->getMessage()]);
 			}
 		}

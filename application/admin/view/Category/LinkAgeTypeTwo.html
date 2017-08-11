@@ -1,0 +1,16 @@
+<select name="firstType" id="firstType">
+	<option value="0">请选择分类</option>
+	{volist name='firstTypes' id='type'}
+	<option value="{$type.id}">{$type.name}</option>
+	{/volist}		
+</select>
+<select name="secondType" id="secondType">
+	<option value="0">请选择分类</option>
+
+</select>
+{present name='threeTypes'}
+<select name="threeType" id="threeType">
+	<option value="0">请选择分类</option>
+
+</select>
+{/present}

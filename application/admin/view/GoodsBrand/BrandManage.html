@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>品牌操作</title>
+	<script src="__PUBLIC__/static/jquery-3.2.1.js"></script>
+	<script src="__PUBLIC__/static/js/TypeLinkAge.js"></script>
+	<script type='text/javascript'>
+		$(function(){
+
+		});
+	</script>
+</head>
+<body>
+	<form name='brandInfo' id='brandInfo'>
+		<dl>
+			<dt>名称(必填)</dt>
+			<dd><input type="text" name='name'></dd>
+			<dt>所属分类</dt>
+			<dd>
+			<!--<select name="firstType" id="firstType">
+				<option value="0">请选择分类</option>
+				
+			</select>
+			<select name="secondType" id="secondType">
+				<option value="0">请选择分类</option>
+			</select>-->
+			{include file='Category/LinkAgeTypeTwo' name='firstTypes'}
+			</dd>
+			<dt></dt>
+			<dd></dd>
+			<dt></dt>
+			<dd></dd>
+		</dl>
+	</form>
+</body>
+</html>

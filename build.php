@@ -17,7 +17,7 @@ return [
     'admin'     => [
         '__file__'   => ['common.php'],
         '__dir__'    => ['behavior', 'controller', 'model', 'view','lang'],
-        'controller' => ['ProductModel'],
+        'controller' => ['ProductModel','GoodsBrand','Category'],
         'model'      => ['Spec','Goods','GoodsCategory','GoodsType','Brand','GoodsModel','GoodsAttr','SpecItem'],
         'view'       => ['index/index'],
     ],

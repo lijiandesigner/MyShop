@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>显示所有品牌</title>
+</head>
+<body>
+	<ul>
+	{volist name='brands' id='brand'}
+		<li>{$brand.name}-- <img src="__PUBLIC__{$brand.logo}" alt="">--{$brand.category.name}--- <a href="{:url('BrandManage',['id'=>$brand.id])}">修改</a><a href="{:url('delBrand',['id'=>$brand.id])}">删除</a></li>
+	{/volist}
+	</ul>
+	{$brands->render()}
+</body>
+</html>
