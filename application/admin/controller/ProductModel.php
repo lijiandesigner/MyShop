@@ -7,6 +7,7 @@ use think\Db;
 use app\admin\logic\GoodLogic;
 use app\admin\model\GoodsModel;
 use app\admin\model\GoodsAttr;
+use app\admin\model\Spec;
 /*
 产品模型 控制器
 分类 规格 属性 相关操作
@@ -87,6 +88,11 @@ class ProductModel extends controller
 		$typesChild=Db::name('GoodsCategory')->where('parent_id','=',$typeid)->field('id,name')->select();
 		return json_encode($typesChild);
 	}
+
+	/*
+	 *代码需要重构一下 把商品分类操作单独 独立出去 2017/8/3
+	 */
+
 	//显示所有模型
 	public function showModels(){
 		$pageResult=GoodsModel::getAllPages();
@@ -163,6 +169,45 @@ class ProductModel extends controller
 			}
 		}else{
 			return json(['message'=>'属性不存在','status'=>0]);
+		}
+	}
+	//显示规格信息
+	public function showGoodsSpec(){
+		$specPages=Spec::getAllPages();
+		$this->assign('specs',$specPages);
+		return $this->fetch('ProductModel/ShowGoodsSpec');
+	}
+	//操作规格信息 添加 修改
+	public function specManage($specId=0){
+		$this->assign('specId',$specId);//把id注册到视图中 修改时回传
+		if(request()->isGet()){//首次访问时
+			$models=GoodsModel::all();
+			if($specId){//如果为修改 将需修改对象注册到视图
+				$specCurrent=Spec::get($specId);
+				$this->assign('specCur',$specCurrent);			
+			}
+			$this->assign('models',$models);
+			return $this->fetch('ProductModel/specManage');
+		}else if(request()->isAjax()){
+			//数据提交时
+			$specInfo=new Spec();
+			$specId=input('post.id');//id数据回传
+			if ($specId){
+				$specInfo=Spec::get($specId);//确认为修改时 获取需要修改的操作对象	
+			}
+
+			try{
+				$specInfo->allowField(true)->data(input('post.'))->save();
+				//新增获取刚添加的规格的id 修改获取需要修改的规格id
+				$specId=$specId?$specId:$specInfo->getLastInsID();
+				
+				$specInfo->afterSave($specId);
+				//保存规格项 end
+				//操作成功时
+				return json(['message'=>'ok','status'=>1]);
+			}catch(\Exception $e){
+				return json(['message'=>$e->getMessage()]);
+			}
 		}
 	}
 

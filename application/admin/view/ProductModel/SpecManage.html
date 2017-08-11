@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>specmanage</title>
+	<script src="__PUBLIC__/static/jquery-3.2.1.js"></script>
+	<script type='text/javascript'>
+		$(function(){
+			$('#sub').bind('click',function(){
+				var $specData=$('#specInfo').serialize();
+				$.ajax({
+					url:'',
+					data:$specData,
+					type:'POST'
+				}).done(function(data){
+					alert(data.message);
+				});
+			});
+			var textarea=$('#specItems').html().replace(/\t+/g,'');//文本内容
+			$('#specItems').html(textarea);//取出文本域可能会有的制表符
+
+		});
+	</script>
+</head>
+<body>
+<form action="" name='specInfo' id='specInfo'>
+	<dl>
+		<dt>规格名称</dt>
+		<dd><input type="text" name='name'
+		{present name='specCur'}
+		value='{$specCur.name}'
+		{/present}
+		></dd>
+		<dt>所属商品类型</dt>
+		<dd><select name="category_id" id="">
+			<option value="0">请选择</option>
+			{volist name='models' id='model'}
+				<option value="{$model.id}"
+				{present name='specCur'}
+				{if condition='$specCur.category_id eq $model.id'}
+				selected='selected'
+				{/if}
+				{/present}
+				>{$model.name}</option>
+			{/volist}
+		</select></dd>
+		<dt>规格项</dt>
+		<dd>
+			<textarea name="specItems" id="specItems" cols="30" rows="10">
+			{present name='specCur'}
+			{volist name='$specCur.specItems' id='item'}
+			{$item.name.'&#13;&#10;'}
+			{/volist}
+			{/present}
+			</textarea>
+		</dd>
+		<dt>排序</dt>
+		<dd><input type="number" name='spec_order'
+		{present name='specCur'}
+		value='{$specCur.spec_order}'
+		{/present}
+		></dd>
+		<dt><input type="hidden" name='id' value='{$specId}'></dt>
+		<dd><input type="button" id='sub' value="提交"></dd>
+	</dl>
+</form>
+</body>
+</html>

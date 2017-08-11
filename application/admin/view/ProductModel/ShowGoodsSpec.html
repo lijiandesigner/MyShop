@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>specs</title>
+</head>
+<body>
+	<ul>
+		{volist id='spec' name='specs'}
+		<li>{$spec.name}---{$spec.goodsModel.name}-----
+		<a href="＃">修改</a><a href="#">删除</a></li>
+		{/volist}
+		
+	</ul>
+	{$specs.render()}
+</body>
+</html>
