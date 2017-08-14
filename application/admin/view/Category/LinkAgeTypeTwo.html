@@ -1,16 +1,32 @@
 <select name="firstType" id="firstType">
 	<option value="0">请选择分类</option>
 	{volist name='firstTypes' id='type'}
-	<option value="{$type.id}">{$type.name}</option>
+	<option value="{$type.id}" {present name='selectedTypes'}
+	{if condition='$selectedTypes["one"] eq $type.id'}selected='selected'{/if}
+	{/present} >{$type.name}</option>
 	{/volist}		
 </select>
+{if condition='$floor gt 1'}
 <select name="secondType" id="secondType">
 	<option value="0">请选择分类</option>
-
+	{present name='selectedTypes'} 
+	{present name='secTypes'}
+	{volist name='secTypes' id='type'}
+	<option value="{$type.id}" {if condition='$selectedTypes["two"] eq $type.id'}selected='selected'{/if}>{$type.name}</option>
+	{/volist}
+	{/present}
+	{/present}
 </select>
-{present name='threeTypes'}
+{/if}
+{if condition='$floor gt 2'}
 <select name="threeType" id="threeType">
-	<option value="0">请选择分类</option>
-
+	<option value="0">请选择分类</option>	
+	{present name='selectedTypes'}
+	{present name='threeTypes'}
+	{volist name='threeTypes' id='type'}
+	<option value="{$type.id}" {if condition='$selectedTypes["three"] eq $type.id'}selected='selected'{/if}>{$type.name}</option>
+	{/volist}
+	{/present}
+	{/present}
 </select>
-{/present}
+{/if}

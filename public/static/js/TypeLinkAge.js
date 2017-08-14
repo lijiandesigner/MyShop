@@ -6,7 +6,7 @@ $(function(){
 			$child.find('option:gt(0)').remove();
 			if(parseInt(fid)){
 				$.ajax({
-					url:'..\\Category\\GetChildTypes',
+					url:dir+'/Category/GetChildTypes',
 					data:{'id':fid},
 					type:'POST'
 				}).done(function(data){

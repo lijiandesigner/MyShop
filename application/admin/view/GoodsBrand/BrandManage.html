@@ -4,10 +4,27 @@
 	<meta charset="UTF-8">
 	<title>品牌操作</title>
 	<script src="__PUBLIC__/static/jquery-3.2.1.js"></script>
+	<script type=text/javascript>
+		var dir='__ADMIN__';
+	</script>
 	<script src="__PUBLIC__/static/js/TypeLinkAge.js"></script>
 	<script type='text/javascript'>
 		$(function(){
+			$('#sub').bind('click',function(){
+				var formData=new FormData($('#brandInfo')[0]);
 
+				$.ajax({
+					url:'{:url("BrandManage")}',
+					data:formData,
+					type:'POST',
+					async:false,
+					cache:false,
+					contentType:false,
+					processData:false
+				}).done(function(data){
+					alert(data.message);
+				});
+			});
 		});
 	</script>
 </head>
@@ -15,22 +32,23 @@
 	<form name='brandInfo' id='brandInfo'>
 		<dl>
 			<dt>名称(必填)</dt>
-			<dd><input type="text" name='name'></dd>
+			<dd><input type="text" name='name'
+			{present name='curBrand'}
+			value='{$curBrand.name}'
+			{/present}
+			></dd>
 			<dt>所属分类</dt>
 			<dd>
-			<!--<select name="firstType" id="firstType">
-				<option value="0">请选择分类</option>
-				
-			</select>
-			<select name="secondType" id="secondType">
-				<option value="0">请选择分类</option>
-			</select>-->
-			{include file='Category/LinkAgeTypeTwo' name='firstTypes'}
+			{include file='Category/LinkAgeTypeTwo'}
 			</dd>
-			<dt></dt>
-			<dd></dd>
-			<dt></dt>
-			<dd></dd>
+			<dt>品牌logo</dt>
+			<dd><input type="file" name='logo'/><img src="{present name='curBrand'}{$curBrand.logo}{else/}__PUBLIC__/upload/brand/1584936.jpg{/present}" alt=""></dd>
+			<dt>排序</dt>
+			<dd><input type="number" name='brand_order'
+			{present name='curBrand'}value='{$curBrand.brand_order}'{/present}
+			></dd>
+			<dt><input type="hidden" name='id' value='{$id}'></dt>
+			<dd><input type="button" id='sub' value='确定'/></dd>
 		</dl>
 	</form>
 </body>

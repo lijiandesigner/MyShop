@@ -65,7 +65,7 @@ class ProductModel extends controller
 		if ($file) {
 			//上传到服务器指定目录 并且使用uniqid规则
 			$info=$file->rule('uniqid')->move($dir);
-			$type->image=DS.'upload'.DS.'category'.DS.$info->getFilename();//获取生成的文件名
+			$type->image=DS.'public'.DS.'upload'.DS.'category'.DS.$info->getFilename();//获取生成的文件名
 		}
 		
 		$type->name=$req->param('name');
