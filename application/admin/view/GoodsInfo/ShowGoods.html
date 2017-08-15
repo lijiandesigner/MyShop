@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>产品列表</title>
+</head>
+<body>
+	<ul>
+	{volist name='goodss' id='goods'}
+		<li>{$goods.id}--{$goods.name}--{$goods.goods_sn}--{$goods.category.name}--{$goods.cost_prise}</li>
+	{/volist}
+	</ul>
+	{$goodss->render()}
+</body>
+</html>

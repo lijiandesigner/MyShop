@@ -17,9 +17,9 @@ return [
     'admin'     => [
         '__file__'   => ['common.php'],
         '__dir__'    => ['behavior', 'controller', 'model', 'view','lang'],
-        'controller' => ['ProductModel','GoodsBrand','Category'],
+        'controller' => ['ProductModel','GoodsInfo','GoodsBrand','Category'],
         'model'      => ['Spec','Goods','GoodsCategory','GoodsType','Brand','GoodsModel','GoodsAttr','SpecItem'],
-        'view'       => ['index/index'],
+        'view'       => ['index/index','GoodsInfo/ShowGoods'],
     ],
     // 其他更多的模块定义
 ];
