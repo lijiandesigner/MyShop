@@ -19,7 +19,7 @@ return [
         '__dir__'    => ['behavior', 'controller', 'model', 'view','lang'],
         'controller' => ['ProductModel','GoodsInfo','GoodsBrand','Category'],
         'model'      => ['Spec','Goods','GoodsCategory','GoodsType','Brand','GoodsModel','GoodsAttr','SpecItem'],
-        'view'       => ['index/index','GoodsInfo/ShowGoods'],
+        'view'       => ['index/index','GoodsInfo/ShowGoods','GoodsInfo/GoodsManage'],
     ],
     // 其他更多的模块定义
 ];
