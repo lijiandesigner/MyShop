@@ -21,7 +21,7 @@ class GoodsInfo extends controller
 			//$this->initEditor();//编辑器
 			return $this->fetch('GoodsManage');
 		}else if(request()->isAjax()){
-			
+			return json(['message'=>input('goods_content')]);
 		}
 	}
 	public function delGoods($id=0){

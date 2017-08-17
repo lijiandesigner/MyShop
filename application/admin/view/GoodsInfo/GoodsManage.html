@@ -6,10 +6,7 @@
 <script src="__PUBLIC__/static/jquery-3.2.1.js"></script>
 	<!--以下是在线编辑器 代码 -->
 <script type="text/javascript">
-    /*
-	 * 在线编辑器相 关配置 js 
-	 *  参考 地址 http://fex.baidu.com/ueditor/
-	 */
+    window.UEDITOR_HOME_URL = "__PUBLIC__/static/ueditor/"; 
    
 </script>
 <script type="text/javascript" charset="utf-8" src="/public/static/Ueditor/ueditor.config.js"></script>
@@ -60,6 +57,24 @@
 
     }); 
 </script>
+<script type='text/javascript'>
+	$(function(){
+		$('#sub').bind('click',function(){
+			var form=new FormData($('#goods')[0]);
+			$.ajax({
+				url:'{url("GoodsManage")}',
+				data:form,
+				type:'POST',
+				async:false,
+				cache:false,
+				contentType:false,
+				processData:false
+			}).done(function(data){
+				alert(data.message);
+			});
+		});
+	});
+</script>
 </head>
 <body>
 <form action="" name='goods' id='goods'>
@@ -99,8 +114,8 @@
 			<textarea class="span12 ckeditor" id="goods_content" name="goods_content" title=""></textarea>
                                         <span id="err_goods_content" style="color:#F00; display:none;"></span>
 		</dd>
-		<dt></dt>
-		<dd></dd>
+		<dt><input type="hidden" name='id' value='0'></dt>
+		<dd><input type="button" value='提交' id='sub'></dd>
 	</dl>
 </form>
 </body>
